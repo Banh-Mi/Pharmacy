@@ -30,7 +30,7 @@ public class DAO_DiaChi {
     }
 
     public DiaChi timdiachi(String maDC) throws Exception {
-        String sql = "SELECT [tinhTP],[quanHuyen],[phuongXa] FROM [dbo].[DiaChi] where maDC= ? ";
+        String sql = "SELECT ma_dia_chi, tinh_tp, quan_huyen, phuong_xa FROM [dbo].[DiaChi] where ma_dia_chi= ? ";
 
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1, maDC);
@@ -39,14 +39,14 @@ public class DAO_DiaChi {
         if (rs.next()) {
             // NhanVien nv= new NhanVien(rs.getString("maNhanVien"), rs.getString("tenNhanVien"), rs.getBoolean("gioiTinh"), rs.getString("soDienThoaiNV"), rs.getString("passLogin"), rs.getBoolean("trangThaiLamViec"), rs.getBoolean("loaiNV"),rs.getString("cmnd") ,null);
 
-            DiaChi dc = new DiaChi(rs.getString("tinhTP"), rs.getString("quanHuyen"), rs.getString("phuongXa"));
+            DiaChi dc = new DiaChi(rs.getString("tinh_tp"), rs.getString("quan_huyen"), rs.getString("phuong_xa"));
             return dc;
         }
         return null;
     }
 
     public String timMaDC(String tp, String qh, String px) throws Exception {
-        String sql = "SELECT [maDC] FROM [dbo].[DiaChi] where tinhTP=N'" + tp + "' and quanHuyen=N'" + qh + "' and phuongXa=N'" + px + "'";
+        String sql = "SELECT ma_dia_chi FROM [dbo].[DiaChi] where tinh_tp=N'" + tp + "' and quan_huyen=N'" + qh + "' and phuong_xa=N'" + px + "'";
 
         PreparedStatement stmt = con.prepareStatement(sql);
         // stmt.setString(1, tp);
@@ -54,7 +54,7 @@ public class DAO_DiaChi {
         // stmt.setString(3, px);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
-            String madiachi = rs.getString("maDC");
+            String madiachi = rs.getString("ma_dia_chi");
             return madiachi;
         }
         return null;
@@ -63,12 +63,12 @@ public class DAO_DiaChi {
     public ArrayList<String> getDSTinhTP() {
         ArrayList tmp = new ArrayList();
         tmp.add("Tỉnh/Thành Phố");
-        String sql = "select distinct tinhTP from DiaChi order by tinhTP asc";
+        String sql = "select distinct tinh_tp from DiaChi order by tinh_tp asc";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                tmp.add(rs.getString("tinhTP"));
+                tmp.add(rs.getString("tinh_tp"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAO_DiaChi.class.getName()).log(Level.SEVERE, null, ex);
@@ -79,12 +79,12 @@ public class DAO_DiaChi {
     public ArrayList<String> getDsQuanHuyen(String tenTinhTP) {
         ArrayList tmp = new ArrayList();
         tmp.add("Quận/Huyện");
-        String sql = "select distinct quanHuyen from DiaChi where tinhTP=N'" + tenTinhTP + "' order by quanHuyen asc";
+        String sql = "select distinct quan_huyen from DiaChi where tinh_tp=N'" + tenTinhTP + "' order by quan_huyen asc";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                tmp.add(rs.getString("quanHuyen"));
+                tmp.add(rs.getString("quan_huyen"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAO_DiaChi.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,12 +95,12 @@ public class DAO_DiaChi {
     public ArrayList<String> getDsPhuongXa(String tenTinhTP, String tenQuanHuyen) {
         ArrayList tmp = new ArrayList();
         tmp.add("Phường/Xã");
-        String sql = "select distinct phuongXa from DiaChi where tinhTP=N'" + tenTinhTP.trim() + "' and quanHuyen=N'" + tenQuanHuyen.trim() + "' order by phuongXa asc";
+        String sql = "select distinct phuong_xa from DiaChi where tinh_tp=N'" + tenTinhTP.trim() + "' and quanhuyen=N'" + tenQuanHuyen.trim() + "' order by phuong_xa asc";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                tmp.add(rs.getString("phuongXa"));
+                tmp.add(rs.getString("phuong_xa"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAO_DiaChi.class.getName()).log(Level.SEVERE, null, ex);
@@ -110,7 +110,7 @@ public class DAO_DiaChi {
 
     public DiaChi getDiaChiByMaDiaChi(String maDC) {
         DiaChi dc = new DiaChi();
-        String sql = "Select * from DiaChi where maDC='" + maDC + "'";
+        String sql = "Select * from DiaChi where ma_dia_chi='" + maDC + "'";
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(sql);
@@ -142,10 +142,10 @@ public class DAO_DiaChi {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                String maDC = rs.getString("maDC");
-                String tinhTP = rs.getString("tinhTP");
-                String quanHuyen = rs.getString("quanHuyen");
-                String phuongXa = rs.getString("phuongXa");
+                String maDC = rs.getString("ma_dia_chi");
+                String tinhTP = rs.getString("tinh_tp");
+                String quanHuyen = rs.getString("quan_huyen");
+                String phuongXa = rs.getString("phuong_xa");
 
                 DiaChi diaChi = new DiaChi(maDC, tinhTP, quanHuyen, phuongXa);
                 dsDiaChi.add(diaChi);
@@ -159,7 +159,7 @@ public class DAO_DiaChi {
     public Vector<String> getAllTinh() {
         Vector<String> v = new Vector<>();
         v.add("Tỉnh/Thành phố");
-        String sql = "select tinhTP from DiaChi group by tinhTP";
+        String sql = "select tinhTP from DiaChi group by tinh_tp";
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(sql);
@@ -178,7 +178,7 @@ public class DAO_DiaChi {
     public Vector<String> getAllHuyenTheoTinh(String tinh) {
         Vector<String> v = new Vector<>();
         v.add("Quận/Huyện");
-        String sql = "select quanHuyen from DiaChi where tinhTP = N'" + tinh + "' group by quanHuyen";
+        String sql = "select quan_huyen from DiaChi where tinh_tp = N'" + tinh + "' group by quan_huyen";
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(sql);
@@ -197,7 +197,7 @@ public class DAO_DiaChi {
     public Vector<String> getAllPhuongXaTheoTinhVaHuyen(String tinh, String huyen) {
         Vector<String> v = new Vector<>();
         v.add("Phường/Xã");
-        String sql = "select phuongXa from DiaChi where quanHuyen = N'" + huyen + "' and tinhTP = N'" + tinh + "' group by phuongXa";
+        String sql = "select phuong_xa from DiaChi where quan_huyen = N'" + huyen + "' and tinh_tp = N'" + tinh + "' group by phuong_xa";
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(sql);
@@ -215,7 +215,7 @@ public class DAO_DiaChi {
 
     public String getMaDCTheoTinhHuyenXa(String tinh, String huyen, String xa) {
         String ma = "";
-        String sql = "select maDC from DiaChi where tinhTP = N'" + tinh + "' and quanHuyen = N'" + huyen + "' and phuongXa = N'" + xa + "'";
+        String sql = "select ma_dia_chi from DiaChi where tinh_tp = N'" + tinh + "' and quan_huyen = N'" + huyen + "' and phuong_xa = N'" + xa + "'";
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(sql);

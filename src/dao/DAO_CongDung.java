@@ -40,9 +40,9 @@ public class DAO_CongDung {
             Statement statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
-                String maCongDung = rs.getString("maCongDung");
-                String tenCongDung = rs.getString("congDung");
-                String nhomCongDung = rs.getString("nhomCongDung");
+                String maCongDung = rs.getString("ma_cong_dung");
+                String tenCongDung = rs.getString("cong_dung");
+                String nhomCongDung = rs.getString("nhom_cong_dung");
 
                 CongDung congDung = new CongDung(maCongDung, nhomCongDung, tenCongDung);
                 dsCongDung.add(congDung);
@@ -55,7 +55,7 @@ public class DAO_CongDung {
 
     public CongDung getCongDungByMaCongDung(String maCongDung) {
         CongDung c = new CongDung();
-        String sql = "select * from CongDung where maCongDung='" + maCongDung + "'";
+        String sql = "select * from CongDung where ma_cong_dung='" + maCongDung + "'";
         PreparedStatement statement = null;
         try {
             statement = con.prepareStatement(sql);
@@ -64,9 +64,9 @@ public class DAO_CongDung {
             while (rs.next()) {
                 String ma = rs.getString(1);
 
-                String congdung = rs.getString(2);
+                String congdung = rs.getString(3);
 
-                String nhomcongdung = rs.getString(3);
+                String nhomcongdung = rs.getString(2);
                 c = new CongDung(ma, nhomcongdung, congdung);
 
             }

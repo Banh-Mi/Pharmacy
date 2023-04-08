@@ -89,7 +89,7 @@ public class TrangDangNhap extends javax.swing.JFrame {
         lbMatKhau.setBounds(10, 110, 120, 30);
 
         tfDangNhap.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tfDangNhap.setText("0862462245");
+        tfDangNhap.setText("0901234567");
         tfDangNhap.setToolTipText("");
         tfDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +100,7 @@ public class TrangDangNhap extends javax.swing.JFrame {
         tfDangNhap.setBounds(140, 70, 180, 30);
 
         tfPassWord.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tfPassWord.setText("123");
+        tfPassWord.setText("password123");
         tfPassWord.setToolTipText("");
         tfPassWord.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
