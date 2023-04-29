@@ -18,21 +18,21 @@ Hàm này lấy một bản ghi nhân viên từ bảng `NhanVien` bằng ID c�
 ### `public int themNV(NhanVien nv) throws Exception`
 Hàm này thêm một bản ghi nhân viên mới vào bảng `NhanVien`. Nếu bản ghi đã tồn tại (xác định bởi ID), hàm trả về `0`; ngược lại, nó chèn bản ghi và trả về `1`.
 
-###`capNhatNhanVienNghiLam(String ma)`
+### `capNhatNhanVienNghiLam(String ma)`
 Đặt trường `trang_thai_lam` của một nhân viên có `ma_nhan_vien` được chỉ định thành 0, cho biết nhân viên đó không còn làm việc nữa.
 
-###`sinhMaTuDong()`
+### `sinhMaTuDong()`
 Tạo ra một `ma_nhan_vien` mới cho một nhân viên mới. ID mới được xây dựng bằng cách nối chuỗi "NV" với một số gồm sáu chữ số, một hơn số lớn nhất hiện tại trong cơ sở dữ liệu.
 
-###`capNhatAdmind(NhanVien nv)`
+### `capNhatAdmind(NhanVien nv)`
 Cập nhật thông tin của một nhân viên có cùng trường `so_dien_thoai` như `nv`. Thông tin mới được lấy từ đối tượng `NhanVien` `nv` được truyền vào làm đối số.
 
-###`getDSNhanVien()`
+### `getDSNhanVien()`
 Trả về một ArrayList chứa tất cả nhân viên trong bảng `NhanVien`. Mỗi nhân viên được đại diện bằng một đối tượng `NhanVien`.
 
-###`getMaVaTenNV()`
+### `getMaVaTenNV()`
 Trả về một ArrayList chứa tất cả `ma_nhan_vien` và `ten_nhan_vien` (ID và tên nhân viên) của tất cả nhân viên.
 
-###`dangNhap(String tk, String mk)`
+### `dangNhap(String tk, String mk)`
 Kiểm tra xem một nhân viên với số điện thoại và mật khẩu được cung cấp có tồn tại trong cơ sở dữ liệu và có `trang_thai_lam` được đặt thành 1 (tức là vẫn đang làm việc) hay không. Nếu nhân viên tồn tại và mật khẩu đúng, trả về một đối tượng `NhanVien` đại diện cho nhân viên đó. Ngược lại, trả về null.
 
