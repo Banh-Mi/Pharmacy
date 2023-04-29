@@ -1,6 +1,6 @@
 # Giới thiệu
 
-Đây là một lớp DAO để xử lý việc truy cập dữ liệu cho đối tượng `HoaDonBan` trong một ứng dụng Java Swing.
+- Đây là một lớp DAO để xử lý việc truy cập dữ liệu cho đối tượng `HoaDonBan` trong một ứng dụng Java Swing.
 
 ## Hàm tạo
 - `public DAO_HoaDonBan()` - Hàm tạo của lớp, khởi tạo kết nối cơ sở dữ liệu.
