@@ -1,7 +1,7 @@
 
 
 
-## Giới thiệu
+# Giới thiệu
 
 Đây là mã nguồn Java chứa các phương thức để truy vấn và thao tác dữ liệu từ bảng `CongDung` trong cơ sở dữ liệu. Nó bao gồm các phương thức để lấy danh sách công dụng và lấy thông tin của một công dụng dựa trên mã công dụng. Mã nguồn sử dụng các câu truy vấn SQL để tương tác với cơ sở dữ liệu.
 
