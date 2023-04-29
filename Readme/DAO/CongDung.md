@@ -1,6 +1,4 @@
-Đây là một file mã nguồn Java tên DAO_CongDung trong package dao. Nó cung cấp các phương thức để thao tác với bảng CongDung trong cơ sở dữ liệu.
 
-README file cho file này có thể được viết như sau:
 
 # DAO_CongDung
 
