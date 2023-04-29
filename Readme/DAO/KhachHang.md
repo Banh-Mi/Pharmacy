@@ -1,6 +1,6 @@
 # Giới thiệu
 
-Lớp này chứa các phương thức tương tác với bảng "KhachHang" trong cơ sở dữ liệu. Nó cung cấp các chức năng tìm kiếm, cập nhật và truy xuất đối tượng "KhachHang".
+- Lớp này chứa các phương thức tương tác với bảng "KhachHang" trong cơ sở dữ liệu. Nó cung cấp các chức năng tìm kiếm, cập nhật và truy xuất đối tượng "KhachHang".
 
 ## Phương thức
 
