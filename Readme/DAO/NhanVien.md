@@ -36,3 +36,11 @@ Trả về một ArrayList chứa tất cả `ma_nhan_vien` và `ten_nhan_vien` 
 ### `dangNhap(String tk, String mk)`
 Kiểm tra xem một nhân viên với số điện thoại và mật khẩu được cung cấp có tồn tại trong cơ sở dữ liệu và có `trang_thai_lam` được đặt thành 1 (tức là vẫn đang làm việc) hay không. Nếu nhân viên tồn tại và mật khẩu đúng, trả về một đối tượng `NhanVien` đại diện cho nhân viên đó. Ngược lại, trả về null.
 
+### `taoMaNgauNhienNhanVien()`
+Sinh một ID Nhân viên ngẫu nhiên. Phương thức này chọn ID Nhân viên mới nhất từ cơ sở dữ liệu và thêm 1 vào. Nếu ID hiện tại đã đạt đến giá trị tối đa (999999), nó sẽ tạo một ID mới bằng cách tăng phần chữ cái của ID. Ví dụ, nếu ID mới nhất là "NVYY999999", ID tiếp theo sẽ là "NVZA000001". Cuối cùng, phương thức trả về ID mới được tạo.
+
+### `capnhapMatKhau(String mkNew, String soDTNV)` 
+Cập nhật mật khẩu cho một nhân viên với số điện thoại được cung cấp. Phương thức này thực hiện một truy vấn SQL để cập nhật cột "mat_khau" (mật khẩu) trong bảng "NhanVien".
+
+### `timNVTheoTenVaSdt(String ten, String sdt)`
+Tìm kiếm các nhân viên có tên hoặc số điện thoại khớp với chuỗi tìm kiếm được cung cấp. Phương thức này thực hiện một truy vấn SQL để chọn tất cả các dòng từ bảng "NhanVien" trong đó cột "ten_nhan_vien" (tên nhân viên) hoặc "so_dien_thoai" (số điện thoại) chứa các chuỗi tìm kiếm được cung cấp. Sau đó, phương thức tạo một đối tượng Nhân viên cho mỗi dòng và thêm nó vào một ArrayList, được trả về sau đó.
