@@ -1,5 +1,5 @@
 # Giới thiệu
-Đây là một tập tin lớp Java có tên `DAO_NhanVien` chứa một số chức năng để tương tác với bảng `NhanVien` trong cơ sở dữ liệu. Lớp này thực hiện các thao tác như thêm một bản ghi nhân viên mới, lấy một nhân viên bằng số điện thoại hoặc ID và kiểm tra xem một nhân viên có phải là admin hay không.
+- Đây là một tập tin lớp Java có tên `DAO_NhanVien` chứa một số chức năng để tương tác với bảng `NhanVien` trong cơ sở dữ liệu. Lớp này thực hiện các thao tác như thêm một bản ghi nhân viên mới, lấy một nhân viên bằng số điện thoại hoặc ID và kiểm tra xem một nhân viên có phải là admin hay không.
 
 ## Các chức năng của lớp
 
