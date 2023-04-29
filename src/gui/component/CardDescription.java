@@ -7,13 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.Path2D;
 
-/**
- *
- * @author THANHTU
- */
+
 public class CardDescription extends javax.swing.JPanel {
 
-    public CardDescription(String title, String description) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public CardDescription(String title, String description) {
         initComponents();
         setOpaque(false);
         txt.setBackground(new Color(0,0,0,0));
@@ -22,7 +23,7 @@ public class CardDescription extends javax.swing.JPanel {
 
     }
 
-    @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

@@ -10,10 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-/**
- *
- * @author THANHTU
- */
+
 public class ModernScrollBarUI extends BasicScrollBarUI {
 
     private static final int SCROLL_BAR_ALPHA_ROLLOVER = 100;
@@ -60,7 +57,12 @@ public class ModernScrollBarUI extends BasicScrollBarUI {
 
     private static class InvisibleScrollBarButton extends JButton {
 
-        private InvisibleScrollBarButton() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		private InvisibleScrollBarButton() {
             setOpaque(false);
             setFocusable(false);
             setFocusPainted(false);

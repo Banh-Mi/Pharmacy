@@ -4,10 +4,7 @@ package gui.model;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author THANHTU
- */
+
 public class Model_Menu {
     
     public String getIcon() {

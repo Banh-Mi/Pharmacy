@@ -4,7 +4,6 @@
  */
 package dao;
 
-import entity.DiaChi;
 import entity.HoaDonBan;
 import entity.KhachHang;
 import entity.NhanVien;
@@ -13,22 +12,15 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author NDT
- */
 public class DAO_HoaDonBan {
 
     private Connection con;
-    private DAO_DiaChi daodc;
 
     public DAO_HoaDonBan() {
         try {
@@ -69,7 +61,7 @@ public class DAO_HoaDonBan {
         String str = strMaHD.substring(2, 4);
         strMaHD = strMaHD.substring(4);
         long longMaHD = Long.parseLong(strMaHD);
-        if (longMaHD == 999999) {
+        if (longMaHD == 999) {
             if (str.equals("ZZ")) {
                 return "error! (out of memory)";
             } else if (str.codePointAt(1) == 90) {
@@ -85,8 +77,8 @@ public class DAO_HoaDonBan {
         } else {
             longMaHD += 1;
         }
-        strMaHD = longMaHD == 0 ? String.valueOf(1000001 + longMaHD) : String.valueOf(1000000 + longMaHD);
-        strMaHD = "BT" + str + strMaHD.substring(1);
+        strMaHD = longMaHD == 0 ? String.valueOf(101 + longMaHD) : String.valueOf(100 + longMaHD);
+        strMaHD = "HD" + str + strMaHD.substring(1);
         return strMaHD;
     }
 
@@ -144,7 +136,7 @@ public class DAO_HoaDonBan {
     }
 
     public HoaDonBan getChiTietHoaDonBan(String maHD) {
-        String sql = "select hdb.*,kh.ten_khach_hang, kh.dia_chi as 'maDCKH', kh.gioi_tinh as 'gioiTinhKH' ,nv.ten_nhan_vien from HoaDonBan hdb join KhachHang kh on kh.ma_khach_hang=hdb.ma_khach_hang join NhanVien nv on nv.ma_nhan_vien = hdb.ma_nhan_vien where ma_hoa_don_ban =?";
+        String sql = "select hdb.*,kh.ten_khach_hang, kh.dia_chi as 'dia_chi', kh.gioi_tinh as 'gioi_tinh' ,nv.ten_nhan_vien from HoaDonBan hdb join KhachHang kh on kh.ma_khach_hang=hdb.ma_khach_hang join NhanVien nv on nv.ma_nhan_vien = hdb.ma_nhan_vien where ma_hoa_don_ban =?";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, maHD);
@@ -155,9 +147,9 @@ public class DAO_HoaDonBan {
 //                nv.setTenNV(rs.getString("ten_nhan_vien"));
                 KhachHang kh = new KhachHang(rs.getString("ma_khach_hang"), rs.getString("ten_khach_hang"));
                 kh.setGioiTinh(rs.getBoolean("gioi_tinh"));
-                daodc = new DAO_DiaChi();
-                DiaChi diaChiKhachHang = daodc.getDiaChiByMaDiaChi(rs.getString("dia_chi"));
-                kh.setDiaChi(diaChiKhachHang);
+//                daodc = new DAO_DiaChi();
+//                DiaChi diaChiKhachHang = daodc.getDiaChiByMaDiaChi(rs.getString("dia_chi"));
+                kh.setDiaChi(rs.getString("dia_chi"));
                 HoaDonBan hdb = new HoaDonBan();
                 hdb.setMaHoaDonBan(rs.getString("ma_hoa_don_ban"));
                 hdb.setNgayLapHD(rs.getDate("ngay_lap_hd"));
@@ -202,7 +194,7 @@ public class DAO_HoaDonBan {
     public ArrayList<HoaDonBan> timKiemHoaDon(String maHD, String tenKh, String sdtKH, String sdtNV, Date ngayLapHoaDon) {
         ArrayList<HoaDonBan> tmp = new ArrayList<>();
 
-        String sql = "select * from HoaDonBan hdb join KhachHang kh on hdb.ma_khach_hang = kh.ma_khach_hang join NhanVien nv on nv.ma_nhan_vien=hdb.ma_nhan_vien where ma_hoa_don_ban like ? and ten_khach_hang like ? and soDienThoai like ? and soDienThoaiNV like ?";
+        String sql = "select * from HoaDonBan hdb join KhachHang kh on hdb.ma_khach_hang = kh.ma_khach_hang join NhanVien nv on nv.ma_nhan_vien=hdb.ma_nhan_vien where ma_hoa_don_ban like ? and ten_khach_hang like ? and kh.so_dien_thoai like ? and nv.so_dien_thoai like ?";
         if (ngayLapHoaDon != null) {
             sql += " and ngay_lap_hd= ?";
         }

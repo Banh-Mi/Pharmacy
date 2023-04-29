@@ -6,12 +6,10 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import connect.ConnectDB;
-import entity.DiaChi;
 import entity.NhanVien;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +18,7 @@ import javax.swing.JOptionPane;
 public class DAO_NhanVien {
 
     private Connection con;
-    private DAO_DiaChi dao_DiaChi = new DAO_DiaChi();
+   // private DAO_DiaChi dao_DiaChi = new DAO_DiaChi();
     private PreparedStatement stmt;
 
     public DAO_NhanVien() {
@@ -33,7 +31,7 @@ public class DAO_NhanVien {
     }
 
     public NhanVien timNhanVien(String sdt) {
-        String sql = "select * from NhanVien where so_dien_thoai= ? and loai_nhan_vien=0 and trang_thai_lam_viec=1";
+        String sql = "select * from NhanVien where so_dien_thoai= ? and loai_nhan_vien=0 and trang_thai_lam=1";
 
         PreparedStatement stmt;
         try {
@@ -42,9 +40,9 @@ public class DAO_NhanVien {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                DiaChi diachi;
+               String diachi;
                 try {
-                    diachi = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
+                    diachi = rs.getString("dia_chi");
                     NhanVien nv = new NhanVien(rs.getString("ten_nhan_vien"), rs.getBoolean("gioi_tinh"),
                             rs.getString("so_dien_thoai"), rs.getBoolean("trang_thai_lam"), rs.getString("so_cmnd"), diachi);
                     return nv;
@@ -61,7 +59,7 @@ public class DAO_NhanVien {
     }
     
     public NhanVien timNhanVienAdmin(String sdt) {
-        String sql = "select * from NhanVien where so_die_thoai= ? and loai_nhan_vien=1 and trang_thai_lam=1";
+        String sql = "select * from NhanVien where so_dien_thoai= ? and loai_nhan_vien=1 and trang_thai_lam=1";
 
         PreparedStatement stmt;
         try {
@@ -70,9 +68,9 @@ public class DAO_NhanVien {
 
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                DiaChi diachi;
+                String diachi;
                 try {
-                    diachi = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
+                    diachi = rs.getString("dia_chi");
                     NhanVien nv = new NhanVien(rs.getString("ten_nhan_vien"), rs.getBoolean("gioi_tinh"),
                             rs.getString("so_dien_thoai"), rs.getBoolean("trang_thai_lam"), rs.getString("so_cmnd"), diachi);
                     return nv;
@@ -99,13 +97,13 @@ public class DAO_NhanVien {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 // NhanVien nv= new NhanVien(rs.getString("maNhanVien"),
-                // rs.getString("tenNhanVien"), rs.getBoolean("gioiTinh"),
-                // rs.getString("soDienThoaiNV"), rs.getString("passLogin"),
-                // rs.getBoolean("trangThaiLamViec"),
-                // rs.getBoolean("loaiNV"),rs.getString("cmnd") ,null);
-                DiaChi diachi;
+                // rs.getString("ten_nhan_vien"), rs.getBoolean("gioi_tinh"),
+                // rs.getString("so_dien_thoai"), rs.getString("passLogin"),
+                // rs.getBoolean("trang_thai_lam"),
+                // rs.getBoolean("loai_nhan_vien"),rs.getString("so_cmnd") ,null);
+                String diachi;
                 try {
-                    diachi = dao_DiaChi.timdiachi(rs.getString("maDC"));
+                    diachi = rs.getString("dia_chi");
                     NhanVien nv = new NhanVien(
                             rs.getString("ma_nhan_vien"),
                             rs.getString("ten_nhan_vien"),
@@ -133,8 +131,8 @@ public class DAO_NhanVien {
         if (timNhanVienTheoMa(nv.getMaNV()) != null) {
             return 0; // trùng sdt nv
         }
-        String madiachi = dao_DiaChi.timMaDC(nv.getDiaChi().getTinhTP(), nv.getDiaChi().getQuanHuyen(),
-                nv.getDiaChi().getPhuongXa());
+//        String madiachi = dao_DiaChi.timMaDC(nv.getDiaChi().getTinhTP(), nv.getDiaChi().getQuanHuyen(),
+//                nv.getDiaChi().getPhuongXa());
 
         String sql = "USE [QLThuoc] INSERT INTO [dbo].[NhanVien] (ma_nhan_vien, ten_nhan_vien, gioi_tinh, so_dien_thoai, mat_khau, trang_thai_lam, loai_nhan_vien, so_cmnd, dia_chi) VALUES( ?,?,?,?,?,?,?,?,? ) ";
 
@@ -148,19 +146,19 @@ public class DAO_NhanVien {
         stmt.setBoolean(6, nv.isTrangThaiLam());
         stmt.setBoolean(7, nv.isLoaiNhanVien());
         stmt.setString(8, nv.getCmnd());
-        stmt.setString(9, madiachi);
+        stmt.setString(9, nv.getDiaChi());
 
         stmt.executeUpdate();
         return 1;
     }
 
     public boolean xoaNhanVien(String sdt) {
-        // System.out.println(timNhanVien(sdt));
+        System.out.println(timNhanVien(sdt));
         int n = -1;
         if (timNhanVien(sdt) == null) {
             return n > 0; // không tìm thấy nhân viên
         }
-        String sql = "DELETE FROM [dbo].[NhanVien] WHERE soDienThoaiNV= ? ";
+        String sql = "DELETE FROM [dbo].[NhanVien] WHERE so_dien_thoai= ? ";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, sdt);
@@ -178,18 +176,18 @@ public class DAO_NhanVien {
         }
         String sql = "USE [QLThuoc] "
                 + "UPDATE [dbo].[NhanVien] "
-                + "   SET [tenNhanVien] = ? "
-                + "      ,[gioiTinh] = ? "
-                + "      ,[soDienThoaiNV] = ? "
-                + "      ,[trangThaiLamViec] = ?"
-                + "      ,[loaiNV] = ? "
-                + "      ,[cmnd] = ? "
-                + "      ,[maDC] = ? "
+                + "   SET [ten_nhan_vien] = ? "
+                + "      ,[gioi_tinh] = ? "
+                + "      ,[so_dien_thoai] = ? "
+                + "      ,[trang_thai_lam] = ?"
+                + "      ,[loai_nhan_vien] = ? "
+                + "      ,[so_cmnd] = ? "
+                + "      ,[dia_chi] = ? "
                 + " WHERE ma_nhan_vien= ? ";
 
-        String madiachi = dao_DiaChi.timMaDC(nv.getDiaChi().getTinhTP(), nv.getDiaChi().getQuanHuyen(), nv.getDiaChi().getPhuongXa());
+//        String madiachi = dao_DiaChi.timMaDC(nv.getDiaChi().getTinhTP(), nv.getDiaChi().getQuanHuyen(), nv.getDiaChi().getPhuongXa());
 //        int loainv= nv.isLoaiNhanVien()?1:0;
-//        int gioiTinh=nv.isGioiTinh()?1:0;
+//        int gioi_tinh=nv.isGioiTinh()?1:0;
 //        int trangthai=nv.isTrangThaiLam()?1:0;
         PreparedStatement stmt = con.prepareStatement(sql);
         stmt.setString(1, nv.getTenNV());
@@ -198,7 +196,7 @@ public class DAO_NhanVien {
         stmt.setBoolean(4, nv.isTrangThaiLam());
         stmt.setBoolean(5, nv.isLoaiNhanVien());
         stmt.setString(6, nv.getCmnd());
-        stmt.setString(7, madiachi);
+        stmt.setString(7, nv.getDiaChi());
         stmt.setString(8, nv.getMaNV());
 
         int n = stmt.executeUpdate();
@@ -220,7 +218,7 @@ public class DAO_NhanVien {
     }
 
     public String sinhMaTuDong() throws SQLException {
-        String sql = " select CONCAT('NVAA', RIGHT(CONCAT('000000',ISNULL(right(max(ma_nhan_vien),6),0) + 1),6)) from [dbo].[NhanVien] where ma_nhan_vien like 'NVAA%' ";
+        String sql = " select CONCAT('NV', RIGHT(CONCAT('00',ISNULL(right(max(ma_nhan_vien),6),0) + 1),6)) from [dbo].[NhanVien] where ma_nhan_vien like 'NV%' ";
         PreparedStatement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
@@ -242,16 +240,16 @@ public class DAO_NhanVien {
                 + "      ,[dia_chi] = ? "
                 + " WHERE so_dien_thoai= ? ";
 
-        String madiachi;
+   
         try {
-            madiachi = dao_DiaChi.timMaDC(nv.getDiaChi().getTinhTP(), nv.getDiaChi().getQuanHuyen(), nv.getDiaChi().getPhuongXa());
+            //madiachi = dao_DiaChi.timMaDC(nv.getDiaChi().getTinhTP(), nv.getDiaChi().getQuanHuyen(), nv.getDiaChi().getPhuongXa());
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, nv.getTenNV());
             stmt.setBoolean(2, nv.isGioiTinh());
             stmt.setString(3, nv.getSdt());
             stmt.setBoolean(4, nv.isLoaiNhanVien());
             stmt.setString(5, nv.getCmnd());
-            stmt.setString(6, madiachi);
+            stmt.setString(6, nv.getDiaChi());
             stmt.setString(7, nv.getSdt());
 
             n = stmt.executeUpdate();
@@ -268,12 +266,12 @@ public class DAO_NhanVien {
      */
     public ArrayList<NhanVien> getDSNhanVien() throws Exception {
         ArrayList<NhanVien> tmp = new ArrayList<NhanVien>();
-        String sql = "select * from NhanVien order by ma_nhan_vien ";
+        String sql = "select * from NhanVien nv  ";
         PreparedStatement stmt = con.prepareStatement(sql);
         ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
-            DiaChi diachi = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
+            //DiaChi diachi = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
 
             NhanVien nv = new NhanVien(rs.getString("ma_nhan_vien"),
                     rs.getString("ten_nhan_vien"),
@@ -283,7 +281,7 @@ public class DAO_NhanVien {
                     rs.getBoolean("trang_thai_lam"),
                     rs.getBoolean("loai_nhan_vien"),
                     rs.getString("so_cmnd"),
-                    diachi);
+                    rs.getString("dia_chi"));
             tmp.add(nv);
         }
         return tmp;
@@ -299,9 +297,9 @@ public class DAO_NhanVien {
 
             while (rs.next()) {
                 String maNhanVien = rs.getString("ma_nhan_vien");
-                String tenNhanVien = rs.getString("ten_nhan_vien");
+                String ten_nhan_vien = rs.getString("ten_nhan_vien");
 
-                NhanVien nv = new NhanVien(maNhanVien, tenNhanVien);
+                NhanVien nv = new NhanVien(maNhanVien, ten_nhan_vien);
                 listNhanVien.add(nv);
             }
         } catch (SQLException e) {
@@ -322,7 +320,6 @@ public class DAO_NhanVien {
                     NhanVien nv = new NhanVien();
                     String ma = rs.getString("ma_nhan_vien");
                     String taikhoan = rs.getString("so_dien_thoai");
-                    boolean loaiNV = rs.getBoolean("loai_nhan_vien");
                     nv.setMaNV(ma);
                     nv.setSdt(taikhoan);
                     nv.setTenNV(rs.getString("ten_nhan_vien"));
@@ -331,7 +328,7 @@ public class DAO_NhanVien {
                     nv.setLoaiNhanVien(rs.getBoolean("loai_nhan_vien"));
                     nv.setCmnd(rs.getString("so_cmnd"));
                     try {
-                        nv.setDiaChi(dao_DiaChi.timdiachi(rs.getString("dia_chi")));
+                        nv.setDiaChi(rs.getString("dia_chi"));
                         return nv;
                     } catch (Exception ex) {
                         Logger.getLogger(DAO_NhanVien.class.getName()).log(Level.SEVERE, null, ex);
@@ -348,7 +345,7 @@ public class DAO_NhanVien {
 
     public NhanVien getLSDNone() {
 
-        String sql = "select top(1) * from LichSuDangNhap ls join NhanVien nv on ls.maNV=nv.ma_nhan_vien ORDER BY thoiGianDangNhap DESC";
+        String sql = "select top(1) * from LichSuDangNhap ls join NhanVien nv on ls.ma_nhan_vien=nv.ma_nhan_vien ORDER BY tg_dang_nhap DESC";
 
         PreparedStatement stmt;
         try {
@@ -356,9 +353,9 @@ public class DAO_NhanVien {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 try {
-                    DiaChi dc = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
-                    NhanVien nv = new NhanVien(rs.getString("maNV"), rs.getString("tenNhanVien"), rs.getBoolean("gioiTinh"), rs.getString("soDienThoaiNV"), rs.getBoolean("loaiNV"));
-                    nv.setDiaChi(dc);
+                    //DiaChi dc = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
+                    NhanVien nv = new NhanVien(rs.getString("ma_nhan_vien"), rs.getString("ten_nhan_vien"), rs.getBoolean("gioi_tinh"), rs.getString("so_dien_thoai"), rs.getBoolean("loai_nhan_vien"));
+                    nv.setDiaChi(rs.getString("dia_chi"));
                     nv.setCmnd(rs.getString("so_cmnd"));
                     return nv;
                 } catch (Exception ex) {
@@ -371,15 +368,15 @@ public class DAO_NhanVien {
         return null;
     }
 
-    public ArrayList<String> getLSDNTheoNV(String maNV) {
-        ArrayList tmp = new ArrayList();
-        String sql = "select * from LichSuDangNhap where maNV = ? order by thoiGianDangNhap desc";
+    public ArrayList<String> getLSDNTheoNV(String ma_nhan_vien) {
+        ArrayList<String> tmp = new ArrayList<String>();
+        String sql = "select * from LichSuDangNhap where ma_nhan_vien = ? order by tg_dang_nhap desc";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, maNV);
+            stmt.setString(1, ma_nhan_vien);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                String o = rs.getString("maNV") + ";" + rs.getString("tenNhanVien") + ";" + rs.getString("thoiGianDangNhap");
+                String o = rs.getString("ma_nhan_vien") + ";" + rs.getString("ten_nhan_vien") + ";" + rs.getString("tg_dang_nhap");
                 tmp.add(o);
             }
         } catch (SQLException ex) {
@@ -395,12 +392,12 @@ public class DAO_NhanVien {
         String strDate = sdf.format(date);
 
         String sql = "INSERT INTO [dbo].[LichSuDangNhap]\n"
-                + "           ([maNV]\n"
-                + "           ,[tenNhanVien]\n"
-                + "           ,[gioiTinh]\n"
-                + "           ,[soDienThoaiNV]\n"
-                + "           ,[loaiNV]\n"
-                + "           ,[thoiGianDangNhap])\n"
+                + "           ([ma_nhan_vien]\n"
+                + "           ,[ten_nhan_vien]\n"
+                + "           ,[gioi_tinh]\n"
+                + "           ,[so_dien_thoai]\n"
+                + "           ,[loai_nhan_vien]\n"
+                + "           ,[tg_dang_nhap])\n"
                 + "     VALUES (?,?,?,?,?,?) ";
 
         PreparedStatement stmt;
@@ -420,10 +417,10 @@ public class DAO_NhanVien {
         return n > 0;
     }
 
-    public ArrayList<NhanVien> timKiemNhanVien(String sdtNV, String tenNV, String gioiTinh, String trangThaiLamViec) {
+    public ArrayList<NhanVien> timKiemNhanVien(String sdtNV, String tenNV, String gioi_tinh, String trang_thai_lam) {
         ArrayList<NhanVien> temp = new ArrayList<>();
         int lengArr = 0;
-        String sql = "select * from NhanVien nv join DiaChi dc on nv.dia_chi=dc.ma_dia_chi where ";
+        String sql = "select * from NhanVien nv join DiaChi dc on nv.dia_chi=dc.dia_chi where ";
 
         if (!sdtNV.isEmpty() && lengArr > 0) {
             sql += " and so_dien_thoai= " + sdtNV;
@@ -441,28 +438,28 @@ public class DAO_NhanVien {
             lengArr++;
         }
 
-        if (!gioiTinh.equals("Giới tính") && lengArr > 0) {
-            int tf_gioitinh = (gioiTinh == "Nam" ? 1 : 0);
+        if (!gioi_tinh.equals("Giới tính") && lengArr > 0) {
+            int tf_gioitinh = (gioi_tinh == "Nam" ? 1 : 0);
             sql += " and gioi_tinh = " + tf_gioitinh;
             lengArr++;
-        } else if (!gioiTinh.equals("Giới tính")) {
-            int tf_gioitinh = (gioiTinh == "Nam" ? 1 : 0);
+        } else if (!gioi_tinh.equals("Giới tính")) {
+            int tf_gioitinh = (gioi_tinh == "Nam" ? 1 : 0);
             sql += " gioi_tinh = " + tf_gioitinh;
             lengArr++;
         }
 
-        if (!trangThaiLamViec.equals("Trạng thái") && lengArr > 0) {
-            int tf_trangthai = trangThaiLamViec == "Đang làm" ? 1 : 0;
+        if (!trang_thai_lam.equals("Trạng thái") && lengArr > 0) {
+            int tf_trangthai = trang_thai_lam == "Đang làm" ? 1 : 0;
             sql += "and trang_thai_lam = " + tf_trangthai;
             lengArr++;
-        } else if (!trangThaiLamViec.equals("Trạng thái")) {
-            int tf_trangthai = trangThaiLamViec == "Đang làm" ? 1 : 0;
+        } else if (!trang_thai_lam.equals("Trạng thái")) {
+            int tf_trangthai = trang_thai_lam == "Đang làm" ? 1 : 0;
             sql += " trang_thai_lam = " + tf_trangthai;
             lengArr++;
         }
 
         if (lengArr == 0) {
-            sql = "select * from NhanVien nv join DiaChi dc on nv.dia_chi=dc.ma_dia_chi";
+            sql = "select * from NhanVien";
         }
 
         try {
@@ -470,13 +467,13 @@ public class DAO_NhanVien {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 NhanVien nv = new NhanVien();
-                DiaChi dcNV = new DiaChi(rs.getString("tinh_tp"), rs.getString("quan_huyen"), rs.getString("phuong_xa"));
+//                DiaChi dcNV = new DiaChi(rs.getString("tinh_tp"), rs.getString("quan_huyen"), rs.getString("phuong_xa"));
                 nv.setMaNV(rs.getString("ma_nhan_vien"));
                 nv.setTenNV(rs.getString("ten_nhan_vien"));
                 nv.setGioiTinh(rs.getBoolean("gioi_tinh"));
                 nv.setSdt(rs.getString("so_dien_thoai"));
                 nv.setCmnd(rs.getString("so_cmnd"));
-                nv.setDiaChi(dcNV);
+                nv.setDiaChi(rs.getString("dia_chi"));
                 nv.setTrangThaiLam(rs.getBoolean("trang_thai_lam"));
                 temp.add(nv);
             }
@@ -530,7 +527,7 @@ public class DAO_NhanVien {
         } else {
             longMaHD += 1;
         }
-        strMaHD = longMaHD == 0 ? String.valueOf(1000001 + longMaHD) : String.valueOf(1000000 + longMaHD);
+        strMaHD = longMaHD == 0 ? String.valueOf(101 + longMaHD) : String.valueOf(10 + longMaHD);
         strMaHD = "NV" + str + strMaHD.substring(1);
         return strMaHD;
     }
@@ -552,16 +549,15 @@ public class DAO_NhanVien {
     }
 
     public ArrayList<NhanVien> timNVTheoTenVaSdt(String ten, String sdt) {
-        String sql = "select * from NhanVien where ten_nhan_vien like '%" + ten + "%' and so_dien_thoai like N'%" + sdt + "%'";
+        String sql = "select * from NhanVien where ten_nhan_vien like '%" + ten + "%' or so_dien_thoai like N'%" + sdt + "%'";
         PreparedStatement statement = null;
         ArrayList<NhanVien> list = new ArrayList<NhanVien>();
         try {
             statement = con.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                DiaChi diachi;
                 try {
-                    diachi = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
+                    //diachi = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
                     NhanVien nv = new NhanVien(rs.getString("ma_nhan_vien"),
                             rs.getString("ten_nhan_vien"),
                             rs.getBoolean("gioi_tinh"),
@@ -570,7 +566,7 @@ public class DAO_NhanVien {
                             rs.getBoolean("trang_thai_lam"),
                             rs.getBoolean("loai_nhan_vien"),
                             rs.getString("so_cmnd"),
-                            diachi);
+                            rs.getString("dia_chi"));
                     list.add(nv);
                 } catch (Exception ex) {
                     Logger.getLogger(DAO_NhanVien.class.getName()).log(Level.SEVERE, null, ex);

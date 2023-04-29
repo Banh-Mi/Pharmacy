@@ -10,7 +10,7 @@ public class NhanVien {
     private boolean trangThaiLam;
     private boolean loaiNhanVien;
     private String cmnd;
-    private DiaChi diaChi;
+    private String diaChi;
 
     public NhanVien() {
     }
@@ -21,7 +21,7 @@ public class NhanVien {
     }
 
     public NhanVien(String maNV, String tenNV, boolean gioiTinh, String sdt, String matKhau, boolean trangThaiLam,
-            boolean loaiNhanVien, String cmnd, DiaChi diaChi) {
+            boolean loaiNhanVien, String cmnd, String diaChi) {
         this.maNV = maNV;
         this.tenNV = tenNV;
         this.gioiTinh = gioiTinh;
@@ -33,7 +33,7 @@ public class NhanVien {
         this.diaChi = diaChi;
     }
 
-    public NhanVien(String tenNV, boolean gioiTinh, String sdt, boolean trangThaiLam, String cmnd, DiaChi diaChi) {
+    public NhanVien(String tenNV, boolean gioiTinh, String sdt, boolean trangThaiLam, String cmnd, String diaChi) {
         this.tenNV = tenNV;
         this.gioiTinh = gioiTinh;
         this.sdt = sdt;
@@ -118,11 +118,11 @@ public class NhanVien {
         this.cmnd = cmnd;
     }
 
-    public DiaChi getDiaChi() {
+    public String getDiaChi() {
         return diaChi;
     }
 
-    public void setDiaChi(DiaChi diaChi) {
+    public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
 

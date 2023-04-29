@@ -10,13 +10,19 @@ import dao.DAO_Thuoc;
 import entity.Thuoc;
 import gui.controller.ClassGetImg;
 import javax.swing.JLabel;
+import java.awt.Color;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.ImageIcon;
 
-/**
- *
- * @author HoangPC
- */
+
 public class Form_ChiTiet extends javax.swing.JFrame {
-    private dao.DAO_Thuoc daot = new DAO_Thuoc();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private dao.DAO_Thuoc daot = new DAO_Thuoc();
 	/**
 	 * 
 	 */
@@ -98,6 +104,7 @@ public class Form_ChiTiet extends javax.swing.JFrame {
         lblGia = new javax.swing.JLabel();
         txtGia = new javax.swing.JTextField();
         btnDong = new javax.swing.JButton();
+        btnDong.setForeground(new Color(255, 255, 255));
         lblTenHC2 = new javax.swing.JLabel();
         txtDangBaoChe = new javax.swing.JLabel();
         txtNhomCongDung = new javax.swing.JLabel();
@@ -109,7 +116,9 @@ public class Form_ChiTiet extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         lblHinh = new javax.swing.JLabel();
         txtTenThuoc = new javax.swing.JTextField();
+        txtTenThuoc.setEditable(false);
         txtTrangThaiKD = new javax.swing.JTextField();
+        txtTrangThaiKD.setEditable(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Chi tiết thuốc");
@@ -118,23 +127,23 @@ public class Form_ChiTiet extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.setBackground(new java.awt.Color(1, 128, 145));
+        jPanel2.setBackground(new Color(46, 123, 255));
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Chi tiết thuốc");
+        jLabel1.setText("CHI TIẾT THUỐC");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1161, Short.MAX_VALUE)
+        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 1161, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
+        	jPanel2Layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
         );
+        jPanel2.setLayout(jPanel2Layout);
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -259,7 +268,7 @@ public class Form_ChiTiet extends javax.swing.JFrame {
         txtGia.setFocusable(false);
         txtGia.setPreferredSize(new java.awt.Dimension(334, 17));
 
-        btnDong.setBackground(new java.awt.Color(153, 153, 153));
+        btnDong.setBackground(new Color(255, 0, 0));
         btnDong.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
 //        btnDong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/tick .png"))); // NOI18N
         btnDong.setText("Đóng");
@@ -437,7 +446,7 @@ public class Form_ChiTiet extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         lblHinh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHinh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/img/image.png"))); // NOI18N
+        lblHinh.setIcon(new ImageIcon(Form_ChiTiet.class.getResource("/image/icon/pills.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -449,16 +458,11 @@ public class Form_ChiTiet extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblHinh, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
         );
-
-        txtTenThuoc.setEditable(false);
         txtTenThuoc.setBackground(new java.awt.Color(255, 255, 255));
         txtTenThuoc.setFont(new java.awt.Font("Arial", 1, 30)); // NOI18N
-        txtTenThuoc.setForeground(new java.awt.Color(0, 153, 255));
+        txtTenThuoc.setForeground(new Color(46, 123, 255));
         txtTenThuoc.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtTenThuoc.setToolTipText("");
-        txtTenThuoc.setBorder(null);
-
-        txtTrangThaiKD.setEditable(false);
         txtTrangThaiKD.setBackground(new java.awt.Color(255, 255, 255));
         txtTrangThaiKD.setFont(new java.awt.Font("Arial", 2, 14)); // NOI18N
         txtTrangThaiKD.setForeground(new java.awt.Color(255, 0, 0));
@@ -466,39 +470,37 @@ public class Form_ChiTiet extends javax.swing.JFrame {
         txtTrangThaiKD.setBorder(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(txtTenThuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 963, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtTrangThaiKD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addGap(6)
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        				.addGroup(Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        					.addComponent(txtTenThuoc, GroupLayout.DEFAULT_SIZE, 1008, Short.MAX_VALUE)
+        					.addGap(18)
+        					.addComponent(txtTrangThaiKD, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        					.addContainerGap())
+        				.addGroup(jPanel1Layout.createSequentialGroup()
+        					.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
         );
         jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(txtTrangThaiKD, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(txtTenThuoc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+        	jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(jPanel1Layout.createSequentialGroup()
+        			.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+        			.addGap(8)
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(txtTrangThaiKD)
+        				.addComponent(txtTenThuoc))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(jPanel1Layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jPanel5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap())
         );
+        jPanel1.setLayout(jPanel1Layout);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

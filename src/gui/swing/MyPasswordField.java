@@ -13,7 +13,12 @@ import javax.swing.JPasswordField;
 
 public class MyPasswordField extends JPasswordField {
 
-    public String getHint() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public String getHint() {
         return hint;
     }
 

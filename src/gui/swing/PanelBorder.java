@@ -5,18 +5,19 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-/**
- *
- * @author THANHTU
- */
+
 public class PanelBorder extends javax.swing.JPanel {
 
-    public PanelBorder() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public PanelBorder() {
         initComponents();
         setOpaque(false);//thiết lập được vẽ trên đây
     }
 
-    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

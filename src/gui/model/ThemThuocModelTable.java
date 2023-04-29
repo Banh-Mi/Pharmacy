@@ -6,7 +6,11 @@ import javax.swing.table.AbstractTableModel;
 
 public class ThemThuocModelTable extends AbstractTableModel {
 
-    private String[] header;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String[] header;
     private ArrayList<Thuoc> dsThemThuoc;
 
     public ThemThuocModelTable(String[] header, ArrayList<Thuoc> dsThemThuoc) {

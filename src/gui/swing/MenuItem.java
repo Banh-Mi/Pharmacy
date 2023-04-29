@@ -5,13 +5,14 @@ import gui.model.Model_Menu;
 import java.awt.Color;
 import java.awt.Font;
 
-/**
- *
- * @author THANH TU
- */
+
 public class MenuItem extends javax.swing.JPanel {
 
-      private final Model_Menu data;
+      /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final Model_Menu data;
     
     public MenuItem(Model_Menu data) {
         this.data = data;
@@ -20,7 +21,7 @@ public class MenuItem extends javax.swing.JPanel {
         if (data.getType() == Model_Menu.MenuType.MENU) {
             lblIcon.setIcon(data.toIcon());
             lblName.setText(data.getName());
-            lblName.setFont(new Font("Time New Roman",  Font.PLAIN, 15));
+            lblName.setFont(new Font("Time New Roman",  Font.PLAIN, 17));
         }else if(data.getType() == Model_Menu.MenuType.TITLE){
             lblIcon.setText(data.getName()); 
             lblIcon.setFont(new Font("Time New Roman",  Font.BOLD, 18));
@@ -30,7 +31,7 @@ public class MenuItem extends javax.swing.JPanel {
             lblIcon.setIcon(data.toIcon());
             lblName.setText(data.getName());
             lblName.setFont(new Font("Time New Roman",  Font.BOLD, 18));
-            lblName.setForeground(new Color(121, 87, 142));
+            lblName.setForeground(new Color(255,255,255));
         }
         else{
             lblName.setText(" "); 
@@ -41,7 +42,8 @@ public class MenuItem extends javax.swing.JPanel {
         if (data.getType() == Model_Menu.MenuType.MENU) {
             if (selected) {
                 lblIcon.setIcon(data.toIconSelected());
-                lblName.setForeground(new Color(121, 87, 142));
+                lblName.setForeground(new Color(46, 123, 255));
+                lblName.setFont(new Font("Time New Roman",  Font.BOLD, 17));
             }else{
                 lblIcon.setIcon(data.toIcon());
                 lblName.setForeground(new Color(214,217,223));
@@ -49,7 +51,7 @@ public class MenuItem extends javax.swing.JPanel {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

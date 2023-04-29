@@ -7,11 +7,9 @@ package gui.form;
 
 import dao.DAO_CT_HoaDonBan;
 import dao.DAO_HoaDonBan;
-import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import dao.DAO_Thuoc;
 import entity.CT_HoaDonBan;
 import entity.HoaDonBan;
 import entity.KhachHang;
@@ -23,8 +21,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -39,12 +35,9 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
      *
      */
     private static final long serialVersionUID = 1L;
-    private DAO_Thuoc daoBanthuoc = new DAO_Thuoc();
     private String maHd;
-    private Thuoc thuoc;
     private int i;
     private DAO_HoaDonBan daohdb = new DAO_HoaDonBan();
-    private DAO_CT_HoaDonBan daoctht;
     private DAO_CT_HoaDonBan daocthd;
 
     /**
@@ -101,7 +94,7 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        lblTAKSMedical = new javax.swing.JLabel();
+        lblGOAT = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -142,10 +135,10 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblTAKSMedical.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
-        lblTAKSMedical.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        lblTAKSMedical.setText("TAK'S MEDICAL");
-        lblTAKSMedical.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblGOAT.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
+        lblGOAT.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblGOAT.setText("G.O.A.T MEDICAL");
+        lblGOAT.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -162,7 +155,7 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup().addContainerGap()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblTAKSMedical, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                .addComponent(lblGOAT, javax.swing.GroupLayout.DEFAULT_SIZE,
                                         javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 783, Short.MAX_VALUE)
                                 .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE,
@@ -171,7 +164,7 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
                         jPanel2Layout.createSequentialGroup().addContainerGap(13, Short.MAX_VALUE)
-                                .addComponent(lblTAKSMedical)
+                                .addComponent(lblGOAT)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27,
                                         javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -232,11 +225,17 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}, {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null}, {null, null, null, null, null, null, null}},
                 new String[]{"STT", "Tên thuốc", "Giá", "Thành phần", "VAT (%)", "SL", "Tổng (VNĐ)"}) {
-            Class[] types = new Class[]{java.lang.Integer.class, java.lang.String.class, java.lang.Double.class,
+            /**
+					 * 
+					 */
+					private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
+			Class[] types = new Class[]{java.lang.Integer.class, java.lang.String.class, java.lang.Double.class,
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class};
             boolean[] canEdit = new boolean[]{false, false, false, false, false, false, false};
 
-            public Class getColumnClass(int columnIndex) {
+            @SuppressWarnings("rawtypes")
+			public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
             }
 
@@ -577,7 +576,7 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
         txtTenNV.setText(hdb.getNv().getTenNV());
         txtTenkh.setText(hdb.getKh().getTenKh());
         txtNgayLap.setText(hdb.getNgayLapHD().toString());
-        txtDC.setText(hdb.getKh().getDiaChi().getTinhTP() + "/" + hdb.getKh().getDiaChi().getQuanHuyen() + "/" + hdb.getKh().getDiaChi().getPhuongXa());
+        txtDC.setText(hdb.getKh().getDiaChi());
         txtMaHd.setText(maHd);
         txtGioiTinh.setText(hdb.getKh().isGioiTinh() == true ? "Nam" : "Nữ");
     }
@@ -590,7 +589,7 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
         txtTenNV.setText(nv.getTenNV());
         txtTenkh.setText(kh.getTenKh());
         txtNgayLap.setText(strDate);
-        txtDC.setText(kh.getDiaChi().getTinhTP());
+        txtDC.setText(kh.getDiaChi());
         txtMaHd.setText(maHDCuaHang);
         txtGioiTinh.setText(kh.isGioiTinh() == true ? "Nam" : "Nữ");
     }
@@ -689,7 +688,7 @@ public class ChitietHoadonBanJframe extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblTAKSMedical;
+    private javax.swing.JLabel lblGOAT;
     private javax.swing.JLabel lblTitle;
     private javax.swing.JTable tblCtHD;
     private javax.swing.JLabel txtDC;

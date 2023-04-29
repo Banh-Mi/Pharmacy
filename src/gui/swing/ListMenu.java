@@ -15,21 +15,21 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
-import gui.form.TrangDangNhap;
-import gui.main.Main;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author THANHTU
- */
+
 public class ListMenu<E extends Object> extends JList<E> {
     
-    public void addEventSelectedMenu(EventMenuSelected event){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public void addEventSelectedMenu(EventMenuSelected event){
         events.add(event);
     }
     
-    private final DefaultListModel model;
+    @SuppressWarnings("rawtypes")
+	private final DefaultListModel model;
     private final List<EventMenuSelected> events;
     private int selectedIndex = -1;
     private EventMenuSelected event;
@@ -37,8 +37,9 @@ public class ListMenu<E extends Object> extends JList<E> {
         this.event = event;
     }
 
-    public ListMenu() {
-        model = new DefaultListModel();
+    @SuppressWarnings("unchecked")
+	public ListMenu() {
+        model = new DefaultListModel<Object>();
         events = new ArrayList<>();
         super.setModel(model);
                 addMouseListener(new MouseAdapter(){
@@ -91,7 +92,12 @@ public class ListMenu<E extends Object> extends JList<E> {
     @Override
     public ListCellRenderer<? super E> getCellRenderer() {
         return new DefaultListCellRenderer(){
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Component getListCellRendererComponent(JList<?> list, Object o, int index, boolean selected, boolean focus) {
                 Model_Menu data;
                 if (o instanceof Model_Menu) {
@@ -106,14 +112,16 @@ public class ListMenu<E extends Object> extends JList<E> {
         };
     }
     
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void setModel(ListModel<E> lm) {
         for (int i = 0; i < lm.getSize(); i++) {
             model.addElement(lm.getElementAt(i));
         }
     }
     
-    public void addItem(Model_Menu data){
+    @SuppressWarnings("unchecked")
+	public void addItem(Model_Menu data){
         model.addElement(data);
     }
 }

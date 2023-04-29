@@ -5,12 +5,12 @@ public class KhachHang {
     private String tenKh;
     private boolean gioiTinh;
     private String sdt;
-    private DiaChi diaChi;
+    private String diaChi;
     private boolean trangThai;
     
     public KhachHang() {
     }
-    public KhachHang(String maKH, String tenKh, boolean gioiTinh, String sdt, DiaChi diaChi, boolean trangThai) {
+    public KhachHang(String maKH, String tenKh, boolean gioiTinh, String sdt, String diaChi, boolean trangThai) {
         this.maKH = maKH;
         this.tenKh = tenKh;
         this.gioiTinh = gioiTinh;
@@ -46,10 +46,10 @@ public class KhachHang {
     public void setSdt(String sdt) {
         this.sdt = sdt;
     }
-    public DiaChi getDiaChi() {
+    public String getDiaChi() {
         return diaChi;
     }
-    public void setDiaChi(DiaChi diaChi) {
+    public void setDiaChi(String diaChi) {
         this.diaChi = diaChi;
     }
     public boolean isTrangThai() {

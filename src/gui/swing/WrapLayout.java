@@ -9,15 +9,14 @@ import java.awt.Insets;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author THANHTU
- */
+
 public class WrapLayout extends FlowLayout
 {
-  private Dimension preferredLayoutSize;
-
-	public WrapLayout()
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+public WrapLayout()
 	{
 		super();
 	}

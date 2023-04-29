@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import connect.ConnectDB;
-import entity.DiaChi;
 import entity.KhachHang;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -20,14 +19,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author NDT
- */
 public class DAO_KhachHang {
 
     private Connection con;
-    private DAO_DiaChi dao_DiaChi = new DAO_DiaChi();
+    //private DAO_DiaChi dao_DiaChi = new DAO_DiaChi();
 
     public DAO_KhachHang() {
         try {
@@ -38,16 +33,16 @@ public class DAO_KhachHang {
         }
     }
 
-    public KhachHang timKhachHangTheoSDT(String soDienThoai) {
-        String sql = "select * from KhachHang where soDienThoai= ? ";
+    public KhachHang timKhachHangTheoSDT(String so_dien_thoai) {
+        String sql = "select * from KhachHang where so_dien_thoai= ? ";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, soDienThoai);
+            stmt.setString(1, so_dien_thoai);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 try {
-                    DiaChi diachi = dao_DiaChi.timdiachi(rs.getString("maDC"));
-                    KhachHang khachhang = new KhachHang(rs.getString("maKhachHang"), rs.getString("tenKhachHang"), rs.getBoolean("gioiTinh"), rs.getString("soDienThoai"), diachi, rs.getBoolean("trangThai"));
+                    //DiaChi diachi = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
+                    KhachHang khachhang = new KhachHang(rs.getString("ma_khach_hang"), rs.getString("ten_khach_hang"), rs.getBoolean("gioi_tinh"), rs.getString("so_dien_thoai"), rs.getString("dia_chi"), rs.getBoolean("trang_thai"));
                     return khachhang;
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
@@ -60,26 +55,25 @@ public class DAO_KhachHang {
         }
         return null;
     }
-    public ArrayList<KhachHang> timKhachHangTheoDK(String tenKH,String sdt,String trangThai,String gioiTinh,String tinh,String huyen,String phuong) {
+    public ArrayList<KhachHang> timKhachHangTheoDK(String tenKH,String sdt,String trang_thai,String gioi_tinh,String dc) {
         ArrayList<KhachHang> listKhachHang = new ArrayList<>();
         String sql = "SELECT *\n"
-                + "FROM     DiaChi INNER JOIN\n"
-                + "                  KhachHang ON DiaChi.maDC = KhachHang.maDC\n"
-                + "Where tenKhachHang like ? and soDienThoai like ? and trangThai like ? and gioiTinh like ? and tinhTP like ? and quanHuyen like ? and phuongXa like ?";
+                + "FROM    \n"
+                + "                  KhachHang\n"
+                + "Where ten_khach_hang like ? and so_dien_thoai like ? and trang_thai like ? and gioi_tinh like ? and dia_chi like ?";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
              stmt.setString(1, "%" + tenKH + "%");
             stmt.setString(2, "%" + sdt + "%");
-            stmt.setString(3, "%" + trangThai + "%");
-            stmt.setString(4, "%" + gioiTinh + "%");
-            stmt.setString(5, "%" + tinh + "%");
-            stmt.setString(6, "%" + huyen+ "%");
-            stmt.setString(7, "%" + phuong+ "%");
+            stmt.setString(3, "%" + trang_thai + "%");
+            stmt.setString(4, "%" + gioi_tinh + "%");
+            stmt.setString(5, "%" + dc + "%");
+            
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                DiaChi diachi = dao_DiaChi.timdiachi(rs.getString("maDC"));
-                KhachHang khachhang = new KhachHang(rs.getString("maKhachHang"), rs.getString("tenKhachHang"), rs.getBoolean("gioiTinh"), rs.getString("soDienThoai"), diachi, rs.getBoolean("trangThai"));
+//                DiaChi diachi = dao_DiaChi.timdiachi(rs.getString("dia_chi"));
+                KhachHang khachhang = new KhachHang(rs.getString("ma_khach_hang"), rs.getString("ten_khach_hang"), rs.getBoolean("gioi_tinh"), rs.getString("so_dien_thoai"), rs.getString("dia_chi"), rs.getBoolean("trang_thai"));
                 listKhachHang.add(khachhang);
             }
         } catch (Exception e) {
@@ -90,19 +84,19 @@ public class DAO_KhachHang {
 
     public ArrayList<KhachHang> getDsKhachHang() {
         ArrayList<KhachHang> tmp = new ArrayList<>();
-        String sql = "select kh.*,dc.* from KhachHang kh join DiaChi dc on kh.maDC=dc.maDC";
+        String sql = "select kh.* from KhachHang";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 KhachHang kh = new KhachHang();
-                kh.setMaKH(rs.getString("maKhachHang"));
-                kh.setTenKh(rs.getString("tenKhachHang"));
-                kh.setGioiTinh(rs.getBoolean("gioiTinh"));
-                kh.setSdt(rs.getString("soDienThoai"));
-                kh.setTrangThai(rs.getBoolean("trangThai"));
-                DiaChi dcKH = new DiaChi(rs.getString("maDC"), rs.getString("tinhTP"), rs.getString("quanHuyen"), rs.getString("phuongXa"));
-                kh.setDiaChi(dcKH);
+                kh.setMaKH(rs.getString("ma_khach_hang"));
+                kh.setTenKh(rs.getString("ten_khach_hang"));
+                kh.setGioiTinh(rs.getBoolean("gioi_tinh"));
+                kh.setSdt(rs.getString("so_dien_thoai"));
+                kh.setTrangThai(rs.getBoolean("trang_thai"));
+                //DiaChi dcKH = new DiaChi(rs.getString("dia_chi"), rs.getString("tinh_tp"), rs.getString("quan_huyen"), rs.getString("phuong_xa"));
+                kh.setDiaChi(rs.getString("dia_chi"));
                 tmp.add(kh);
             }
         } catch (SQLException ex) {
@@ -114,23 +108,22 @@ public class DAO_KhachHang {
     public ArrayList<KhachHang> getAllKhachHang() {
         ArrayList<KhachHang> listKhachHang = new ArrayList<>();
         try {
-            String sql = "Select * from KhachHang Order by maKhachHang Desc";
+            String sql = "Select * from KhachHang Order by ma_khach_hang Desc";
             Statement statement;
             statement = con.createStatement();
             ResultSet rs = statement.executeQuery(sql);
 
             while (rs.next()) {
-                String maKhachHang = rs.getString("maKhachHang");
-                String tenKhachHang = rs.getString("tenKhachHang");
-                boolean gioiTinh = rs.getBoolean("gioiTinh");
-                String sdt = rs.getString("soDienThoai");
-                boolean trangThai = rs.getBoolean("trangThai");
-                String maDC = rs.getString("maDC");
+                String ma_khach_hang = rs.getString("ma_khach_hang");
+                String ten_khach_hang = rs.getString("ten_khach_hang");
+                boolean gioi_tinh = rs.getBoolean("gioi_tinh");
+                String sdt = rs.getString("so_dien_thoai");
+                boolean trang_thai = rs.getBoolean("trang_thai");
+                String dia_chi = rs.getString("dia_chi");
+//                DAO_DiaChi diaChi_dao = new DAO_DiaChi();
+//                DiaChi diaChi = diaChi_dao.getDiaChiByMaDiaChi(dia_chi);
 
-                DAO_DiaChi diaChi_dao = new DAO_DiaChi();
-                DiaChi diaChi = diaChi_dao.getDiaChiByMaDiaChi(maDC);
-
-                KhachHang kh = new KhachHang(maKhachHang, tenKhachHang, gioiTinh, sdt, diaChi, trangThai);
+                KhachHang kh = new KhachHang(ma_khach_hang, ten_khach_hang, gioi_tinh, sdt, dia_chi, trang_thai);
                 listKhachHang.add(kh);
             }
         } catch (Exception e) {
@@ -151,8 +144,8 @@ public class DAO_KhachHang {
             statement.setString(2, kh.getTenKh());
             statement.setBoolean(3, kh.isGioiTinh());
             statement.setString(4, kh.getSdt());
-            statement.setString(6, kh.getDiaChi().getMaDC());
-            statement.setBoolean(5, kh.isTrangThai());
+            statement.setString(5, kh.getDiaChi());
+            statement.setBoolean(6, kh.isTrangThai());
             n = statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAO_KhachHang.class.getName()).log(Level.SEVERE, null, ex);
@@ -163,7 +156,7 @@ public class DAO_KhachHang {
     public boolean xoaKhachHang(String maKH) {
         int n = -1;
         String sql = "DELETE FROM [dbo].[KhachHang]\n"
-                + "WHERE maKhachHang= ? ";
+                + "WHERE ma_khach_hang= ? ";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, maKH);
@@ -177,19 +170,19 @@ public class DAO_KhachHang {
     public boolean capNhatKhachHang(KhachHang kh) {
         int n = -1;
         String sql = "UPDATE [dbo].[KhachHang]\n"
-                + "   SET [tenKhachHang] = ? \n"
-                + "      ,[gioiTinh] = ? \n"
-                + "      ,[soDienThoai] = ? \n"
-                + "      ,[trangThai] = ? \n"
-                + "      ,[maDC] = ? \n"
-                + " WHERE maKhachHang= ?";
+                + "   SET [ten_khach_hang] = ? \n"
+                + "      ,[gioi_tinh] = ? \n"
+                + "      ,[so_dien_thoai] = ? \n"
+                + "      ,[trang_thai] = ? \n"
+                + "      ,[dia_chi] = ? \n"
+                + " WHERE ma_khach_hang= ?";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, kh.getTenKh());
             stmt.setBoolean(2, kh.isGioiTinh());
             stmt.setString(3, kh.getSdt());
             stmt.setBoolean(4, kh.isTrangThai());
-            stmt.setString(5, kh.getDiaChi().getMaDC());
+            stmt.setString(5, kh.getDiaChi());
             stmt.setString(6, kh.getMaKH());
             n = stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -202,7 +195,7 @@ public class DAO_KhachHang {
         String strMaKH = null;
 
         PreparedStatement s = null;
-        String sql = "select top 1 maKhachHang from KhachHang order by maKhachHang desc";
+        String sql = "select top 1 ma_khach_hang from KhachHang order by ma_khach_hang desc";
         try {
             s = con.prepareStatement(sql);
             ResultSet rs = s.executeQuery();
@@ -221,10 +214,10 @@ public class DAO_KhachHang {
                 e.printStackTrace();
             }
         }
-        String str = strMaKH.substring(4, 6);
-        strMaKH = strMaKH.substring(6);
+        String str = strMaKH.substring(2, 4);
+        strMaKH = strMaKH.substring(4);
         long longMaHD = Long.parseLong(strMaKH);
-        if (longMaHD == 999999) {
+        if (longMaHD == 999) {
             if (str.equals("ZZ")) {
                 return "error! (out of memory)";
             } else if (str.codePointAt(1) == 90) {
@@ -240,11 +233,11 @@ public class DAO_KhachHang {
         } else {
             longMaHD += 1;
         }
-        System.out.println(longMaHD);
-        System.out.println(str);
-        strMaKH = longMaHD == 0 ? String.valueOf(1000001 + longMaHD) : String.valueOf(1000000 + longMaHD);
-        System.err.println(strMaKH);
-        strMaKH = "KHAA" + str + strMaKH.substring(3);
+//        System.out.println(longMaHD);
+//        System.out.println(str);
+        strMaKH = longMaHD == 0 ? String.valueOf(1001 + longMaHD) : String.valueOf(1000 + longMaHD);
+//        System.err.println(strMaKH);
+        strMaKH = "KH" + str + strMaKH.substring(3);
         return strMaKH;
     }
 }

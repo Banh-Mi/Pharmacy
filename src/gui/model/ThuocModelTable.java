@@ -8,13 +8,14 @@ import entity.Thuoc;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
-/**
- *
- * @author NDT
- */
+
 public class ThuocModelTable extends AbstractTableModel{
 
-    private String[] header;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String[] header;
     private ArrayList<Thuoc> dst;
 
     public ThuocModelTable(String[] header, ArrayList<Thuoc> dst) {

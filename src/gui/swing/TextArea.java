@@ -6,12 +6,14 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 import javax.swing.JTextArea;
 
-/**
- *
- * @author THANHTU
- */
+
 public class TextArea extends JTextArea{
-    public TextArea() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public TextArea() {
         setEditable(false);
         setFocusable(false);
         setWrapStyleWord(true);

@@ -28,7 +28,11 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 public class Form_ThongKeNhanVien extends javax.swing.JPanel {
 
-    private DAO_NhanVien nhanVien_dao = new DAO_NhanVien();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private DAO_NhanVien nhanVien_dao = new DAO_NhanVien();
     private DAO_HoaDonBan hoaDonBan_dao = new DAO_HoaDonBan();
     private DAO_CT_HoaDonBan chiTietHD_dao = new DAO_CT_HoaDonBan();
     private DAO_Thuoc thuoc_dao = new DAO_Thuoc();
@@ -37,12 +41,10 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
     private DefaultTableModel modelThongKeThuocHetHan;
     private DefaultTableModel modelThongKeThuocDaHetHan;
     private ArrayList<NhanVien> listNhanVien;
-    private ArrayList<HoaDonBan> listHoaDonBanTheoNgay;
     private ArrayList<Thuoc> listThuoc;
     private ArrayList<Thuoc> listThuocDaHetHan;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     private Date date = new Date();
-    private String maNV;
     private final NhanVien nhanVienThongKe;
 
     public Form_ThongKeNhanVien(NhanVien nv) {
@@ -55,7 +57,6 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
         themDuLieuThuocSapHetHanVaoBang(listThuoc);
         themDuLieuThuocDaHetHanVaoBang(listThuocDaHetHan);
         dcNgay.setDate(date);
-        maNV = "";
         txtMaNV.setEnabled(false);
         txtTenNV.setEnabled(false);
         tableNhanVien.setEnabled(false);
@@ -75,16 +76,6 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
         txtTenNV.setEnabled(false);
         btnXuatFile.setEnabled(false);
 //        modelNhanVien.getDataVector().removeAllElements();
-    }
-
-    private void themDuLieuNhanVienVaoBang(ArrayList<NhanVien> listNhanVien) {
-        modelNhanVien = (DefaultTableModel) tableNhanVien.getModel();
-        for (NhanVien nv : listNhanVien) {
-            modelNhanVien.addRow(new Object[]{
-                nv.getMaNV(),
-                nv.getTenNV()
-            });
-        }
     }
 
     private void themDuLieuThuocSapHetHanVaoBang(ArrayList<Thuoc> listThuoc) {
@@ -118,7 +109,6 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
             String filename = "src\\xuatfile\\" + tenFile + ".xlsx";
             HSSFWorkbook workbook = new HSSFWorkbook();
             HSSFSheet sheet = workbook.createSheet("XuatFileTest");
-            double tongtien = 0;
             HSSFRow rowhead = sheet.createRow((short) 0);
             for (int j = 0; j < table.getColumnCount(); j++) {
                 rowhead.createCell(j).setCellValue(model.getColumnName(j));
@@ -149,7 +139,7 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -447,14 +437,19 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
                 "Mã thuốc", "Tên thuốc", "Số lượng bán ", "Giá", "Thành tiền"
             }
         ) {
-            Class[] types = new Class [] {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
+			Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
+            public Class<?> getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
 
@@ -707,14 +702,19 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
                 "Mã thuốc", "Tên thuốc", "Số đăng ký", "Số lượng", "Hạn sử dụng"
             }
         ) {
-            Class[] types = new Class [] {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
+			Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
+            public Class<?> getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
 
@@ -758,14 +758,19 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
                 "Mã thuốc", "Tên thuốc", "Số lượng", "Giá", "Hạn sử dụng"
             }
         ) {
-            Class[] types = new Class [] {
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			@SuppressWarnings("rawtypes")
+			Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.Double.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
 
-            public Class getColumnClass(int columnIndex) {
+            public Class<?> getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
 
@@ -881,13 +886,11 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
 
     private void cbbLoaiThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLoaiThongKeActionPerformed
         if (cbbLoaiThongKe.getSelectedIndex() == 0) {
-            maNV = "";
             txtMaNV.setEnabled(false);
             txtTenNV.setEnabled(false);
             tableNhanVien.setEnabled(false);
             tableNhanVien.setForeground(new Color(242, 242, 242));
         } else {
-            maNV = "";
             txtMaNV.setEnabled(true);
             txtTenNV.setEnabled(true);
             tableNhanVien.setEnabled(true);
@@ -940,27 +943,6 @@ public class Form_ThongKeNhanVien extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Không có hóa hơn trong ngày của nhân viên");
             return;
         }
-        ArrayList<CT_HoaDonBan> listCT = new ArrayList<>();
-        double tt = 0;
-        for (HoaDonBan hd : list) {
-            tt += hd.tongTien();
-            listCT.addAll(chiTietHD_dao.getDSCT_HdByMaHD(hd.getMaHoaDonBan()));
-        }
-        lblTongDoanhThu.setText(String.format("%,.0f" + " VNĐ", tt));
-        lblTongHoaDon.setText(String.valueOf(list.size()));
-
-        for (CT_HoaDonBan t : listCT) {
-            modelThongKeThuocTheoNgay.addRow(new Object[]{t.getThuoc().getMaThuoc(), t.getThuoc().getTenThuoc(), t.getSoLuong(),
-                Math.round(t.getGiaBan()), Math.round(t.getSoLuong() * t.getGiaBan() * (1 + t.getVat()))});
-        }
-    }
-
-    private void getTatCaHoaDonTheoNgayCuaQuanLi(String ng) {
-        ArrayList<HoaDonBan> list = hoaDonBan_dao.getTatCaHoaDonTheoNgay(ng);
-        modelThongKeThuocTheoNgay.getDataVector().removeAllElements();
-        modelThongKeThuocTheoNgay.fireTableDataChanged();
-        lblTongDoanhThu.setText("0");
-        lblTongHoaDon.setText("0");
         ArrayList<CT_HoaDonBan> listCT = new ArrayList<>();
         double tt = 0;
         for (HoaDonBan hd : list) {

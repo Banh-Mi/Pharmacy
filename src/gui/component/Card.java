@@ -15,19 +15,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-/**
- *
- * @author THANHTU
- */
+
 public class Card extends javax.swing.JPanel {
 
-    private final Model_Card data;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private final Model_Card data;
     private final Timer timer;
     private final Timer timerStop;
     private final CardDescription carDescription;
@@ -91,7 +91,7 @@ public class Card extends javax.swing.JPanel {
         });
     }
 
-    @SuppressWarnings("unchecked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

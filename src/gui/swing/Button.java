@@ -18,7 +18,12 @@ import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class Button extends JButton {
 
-    public Color getEffectColor() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public Color getEffectColor() {
         return effectColor;
     }
 

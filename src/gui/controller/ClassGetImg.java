@@ -1,3 +1,4 @@
+
 package gui.controller;
 
 import java.awt.Image;
@@ -11,12 +12,10 @@ import java.io.OutputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class ClassGetImg {
 	public void getImg(String fileOutPath, JLabel label) throws IOException {
-		ClassGetImg getImg1 = new ClassGetImg();
 		InputStream inStream = null;
 		OutputStream outStream = null;
 		File fileIn = new File("");
@@ -27,7 +26,7 @@ public class ClassGetImg {
 		jfileChooser.setFileFilter(extensionFilter);
 		jfileChooser.setMultiSelectionEnabled(false);
 		int x = jfileChooser.showDialog(null, "Chọn ảnh thuốc");
-		if (x == jfileChooser.APPROVE_OPTION) {
+		if (x == JFileChooser.APPROVE_OPTION) {
 			fileIn = jfileChooser.getSelectedFile();
 			label.setIcon(new ImageIcon(new ImageIcon(fileIn.getAbsolutePath()).getImage()
 					.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT)));
@@ -87,7 +86,7 @@ public class ClassGetImg {
 		jfileChooser.setFileFilter(extensionFilter);
 		jfileChooser.setMultiSelectionEnabled(false);
 		int x = jfileChooser.showDialog(null, "Chọn ảnh thuốc");
-		if (x == jfileChooser.APPROVE_OPTION) {
+		if (x == JFileChooser.APPROVE_OPTION) {
 			fileIn = jfileChooser.getSelectedFile();
 			label.setIcon(new ImageIcon(new ImageIcon(fileIn.getAbsolutePath()).getImage()
 					.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT)));

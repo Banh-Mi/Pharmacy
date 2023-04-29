@@ -2,6 +2,8 @@ package gui.main;
 
 import gui.event.EventMenu;
 import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+
 import gui.form.Form_NhanVien;
 import gui.form.Form_CuaHang;
 import gui.form.Form_HoaDon;
@@ -9,24 +11,36 @@ import gui.form.Form_KhachHang;
 import gui.form.Form_ThongKe;
 import gui.form.Form_Thuoc;
 import java.awt.Color;
-import javax.swing.JComponent;
-import connect.ConnectDB;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+
 import entity.NhanVien;
 import gui.form.Form_ThongKeNhanVien;
 import gui.form.Form_ThongTinCaNhan;
 import gui.form.Form_TrangChu;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
-/**
- *
- * @author THANHTU
- */
+import com.formdev.flatlaf.FlatLightLaf;
+
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.InputMap;
+
+
 public class Main extends javax.swing.JFrame {
 
-    public Main(NhanVien nv) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public Main(NhanVien nv) {
+    	getContentPane().setBackground(new Color(255, 255, 255));
         initComponents();
         init(nv);
     }
@@ -76,75 +90,199 @@ public class Main extends javax.swing.JFrame {
         mainPanel.revalidate();
     }
 
-    @SuppressWarnings("checked")
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	
         menu2 = new gui.component.Menu();
         header1 = new gui.component.Header();
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TAK'S Medical");
+        setTitle("Pharmacy");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
+        getContentPane().add(menu2, java.awt.BorderLayout.CENTER);
 
         mainPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainPanel.setOpaque(false);
         mainPanel.setLayout(new java.awt.BorderLayout());
-
+        getContentPane().add(mainPanel, java.awt.BorderLayout.PAGE_START);
+        
+        btnNewButton = new javax.swing.JButton();
+        btnNewButton.setBackground(new Color(46, 123, 255));
+        btnNewButton2 = new javax.swing.JButton();
+        btnNewButton2.setBackground(new Color(46, 123, 255));
+        
+        btnNewButton.setIcon(new ImageIcon(Main.class.getResource("/image/icon/menu.png")));
+        btnNewButton2.setIcon(new ImageIcon(Main.class.getResource("/image/icon/multiply_white.png")));
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(menu2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(header1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 1456, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 7, Short.MAX_VALUE)))
-                .addContainerGap())
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addContainerGap()
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(header1, GroupLayout.PREFERRED_SIZE, 1379, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 1468, Short.MAX_VALUE))
+        			.addContainerGap())
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu2, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(header1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addGap(7)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(header1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        				.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
+        			.addContainerGap())
         );
-
+        //Xử lý nút để đóng mở menu
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(e.getSource().equals(btnNewButton)) {
+        			layout.setHorizontalGroup(layout.createParallelGroup(Alignment.LEADING)
+        					.addGroup(layout.createSequentialGroup()
+        		        			.addContainerGap()
+        		        			.addComponent(menu2, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+        		        			.addPreferredGap(ComponentPlacement.RELATED)
+        		        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        		        				.addGroup(layout.createSequentialGroup()
+        		        					.addComponent(btnNewButton2, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+        		        					.addPreferredGap(ComponentPlacement.RELATED)
+        		        					.addComponent(header1, GroupLayout.PREFERRED_SIZE, 1379, GroupLayout.PREFERRED_SIZE))
+        		        				.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 1468, Short.MAX_VALUE))
+        		        			.addContainerGap()));
+        			
+        			
+        			 layout.setVerticalGroup(
+        					 layout.createParallelGroup(Alignment.LEADING)
+        		        		.addGroup(layout.createSequentialGroup()
+       		        				.addGap(7)
+        		        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        		        				.addComponent(menu2, GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
+        		        				.addGroup(layout.createSequentialGroup()
+        		        					.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        		        				.addComponent(btnNewButton2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        		        						.addComponent(header1, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE))
+        		        					.addPreferredGap(ComponentPlacement.RELATED)
+        		        					.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)))
+        		        			.addContainerGap())
+        		        );
+        			 
+        			 
+        			 
+        			 
+        			 
+        			 
+        			 
+        			btnNewButton.setVisible(false);
+        			btnNewButton2.setVisible(true);
+        			 getContentPane().setLayout(layout);
+        		        pack();
+        		        setLocationRelativeTo(null);
+        		      
+        		}
+        		
+        	}
+        });
+        btnNewButton2.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		if(e.getSource().equals(btnNewButton2)) {
+        			getContentPane().removeAll();
+        			layout.setHorizontalGroup(
+        		        	layout.createParallelGroup(Alignment.LEADING)
+        		        		.addGroup(layout.createSequentialGroup()
+        		        			.addContainerGap()
+        		        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        		        				.addGroup(layout.createSequentialGroup()
+        		        					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+        		        					.addPreferredGap(ComponentPlacement.RELATED)
+        		        					.addComponent(header1, GroupLayout.PREFERRED_SIZE, 1379, GroupLayout.PREFERRED_SIZE))
+        		        				.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 1468, Short.MAX_VALUE))
+        		        			.addContainerGap())
+        		        );
+        		        layout.setVerticalGroup(
+        		        	layout.createParallelGroup(Alignment.LEADING)
+        		        		.addGroup(layout.createSequentialGroup()
+        		        			.addGap(7)
+        		        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        		        				.addComponent(header1, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+        		        				.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        		        			.addPreferredGap(ComponentPlacement.RELATED)
+        		        			.addComponent(mainPanel, GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
+        		        			.addContainerGap())
+        		        );
+        			btnNewButton.setVisible(true);
+        			btnNewButton2.setVisible(false);
+        			 getContentPane().setLayout(layout);
+        		        pack();
+        		        setLocationRelativeTo(null);
+        		       
+        		}
+        		     
+        	}
+        });
+        getContentPane().setLayout(layout);
         pack();
         setLocationRelativeTo(null);
+//        Kết thúc xử lý nút đóng mở menu
+        
+        
+        //Gắn phím tắt cho việc đóng mở menu
+        
+        InputMap inputmap = btnNewButton.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actMap = btnNewButton.getActionMap();
+        inputmap.put(KeyStroke.getKeyStroke(KeyEvent.VK_M,InputEvent.CTRL_DOWN_MASK),"click");
+        actMap.put("click",new AbstractAction() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton.doClick();
+				
+			}
+        	
+        });
+        
+        InputMap inputmapClose = btnNewButton2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actMapClose = btnNewButton2.getActionMap();
+        
+        inputmapClose.put(KeyStroke.getKeyStroke(KeyEvent.VK_M,InputEvent.CTRL_DOWN_MASK),"click");
+        actMapClose.put("click",new AbstractAction() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				btnNewButton2.doClick();
+				
+			}
+        	  
+        });
+        // Kết thúc gắn phím tắt
+       
     }// </editor-fold>//GEN-END:initComponents
 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        NhanVien nv = new NhanVien("NV001", "Nguyễn Văn A");
+
+    	
+    	try {
+    		javax.swing.UIManager.setLookAndFeel(new FlatLightLaf());
+    	}catch (Exception e) {
+			 e.printStackTrace();
+		}
+        NhanVien nv = new NhanVien("NV001", "Nguyễn Văn A",true,"0901234567","password123",true,true,"123456789","Tràng Tiền, Hoàn Kiếm, Hà Nội");
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -153,9 +291,10 @@ public class Main extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private gui.component.Header header1;
     private javax.swing.JPanel mainPanel;
     private gui.component.Menu menu2;
-    // End of variables declaration//GEN-END:variables
+    private JButton btnNewButton;
+    private JButton btnNewButton2;
 }

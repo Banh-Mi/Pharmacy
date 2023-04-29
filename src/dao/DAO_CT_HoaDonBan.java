@@ -5,7 +5,6 @@
 package dao;
 
 import entity.CT_HoaDonBan;
-import entity.HoaDonBan;
 import entity.Thuoc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author NDT
+ * 
  */
 public class DAO_CT_HoaDonBan {
 
@@ -34,11 +33,11 @@ public class DAO_CT_HoaDonBan {
     public boolean capNhatChiTietHoaDon(Thuoc thuoc, String maHoaDon) {
         int n = -1;
         String sql = "INSERT INTO [dbo].[CT_HoaDonBan]\n"
-                + "           ([soLuong]\n"
-                + "           ,[maThuoc]\n"
-                + "           ,[maHoaDonBan]\n"
-                + "           ,[giaBan]\n"
-                + "           ,[thueVAT])\n"
+                + "           ([so_luong]\n"
+                + "           ,[ma_thuoc]\n"
+                + "           ,[ma_hoa_don_ban]\n"
+                + "           ,[gia_ban]\n"
+                + "           ,[thue_vat])\n"
                 + "     VALUES\n"
                 + "           (?,?,?,?,?)";
 
@@ -57,13 +56,25 @@ public class DAO_CT_HoaDonBan {
         }
         return n > 0;
     }
-
+     public boolean xoaCTHoaDon(String maHD) {
+        int n = -1;
+        String sql = "DELETE FROM [dbo].[CT_HoaDonBan]\n"
+                + "      WHERE ma_hoa_don_ban = ? ";
+        try {
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, maHD);
+            n = stmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DAO_HoaDonBan.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return n > 0;
+    }
     public double giaTienTheoMaHD(String maHD) {
 //        String gia = "";
         double gia=0;
-        String sql = "select SUM(cthd.soLuong*cthd.giaBan*(1+cthd.thueVAT)) as 'TongTien',maHoaDonBan from CT_HoaDonBan cthd\n"
-                + "group by cthd.maHoaDonBan\n"
-                + "Having maHoaDonBan= ? ";
+        String sql = "select SUM(cthd.so_luong*cthd.gia_ban*(1+cthd.thue_vat)) as 'TongTien',ma_hoa_don_ban from CT_HoaDonBan cthd\n"
+                + "group by cthd.ma_hoa_don_ban\n"
+                + "Having ma_hoa_don_ban= ? ";
         try {
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, maHD);
@@ -79,8 +90,8 @@ public class DAO_CT_HoaDonBan {
     }
 
     public ArrayList<CT_HoaDonBan> getChiTietHoaDon(String maHD) {
-        ArrayList tmp = new ArrayList();
-        String sql = "select cthd.*,t.tenThuoc, t.thueVAT as 'VATThuoc', t.giaBan,t.thanhPhan from CT_HoaDonBan cthd join Thuoc t on cthd.maThuoc=t.maThuoc where maHoaDonBan= ? ";
+        ArrayList<CT_HoaDonBan> tmp = new ArrayList<CT_HoaDonBan>();
+        String sql = "select cthd.*,t.ten_thuoc, t.thue_vat as 'thue_vat', t.gia_ban,t.thanh_phan from CT_HoaDonBan cthd join Thuoc t on cthd.ma_thuoc=t.ma_thuoc where ma_hoa_don_ban= ? ";
         PreparedStatement stmt;
         try {
             stmt = con.prepareStatement(sql);
@@ -88,15 +99,15 @@ public class DAO_CT_HoaDonBan {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 CT_HoaDonBan cthd = new CT_HoaDonBan();
-//                String x = String.format("%,.0f", rs.getDouble("giaBan"));
+//                String x = String.format("%,.0f", rs.getDouble("gia_ban"));
 
-                cthd.setGiaBan(rs.getDouble("giaBan"));
-                cthd.setSoLuong(rs.getInt("soLuong"));
-                cthd.setVat(rs.getFloat("VATThuoc"));
+                cthd.setGiaBan(rs.getDouble("gia_ban"));
+                cthd.setSoLuong(rs.getInt("so_luong"));
+                cthd.setVat(rs.getFloat("thue_vat"));
                 Thuoc t = new Thuoc();
-                t.setTenThuoc(rs.getString("tenThuoc"));
-                t.setMaThuoc(rs.getString("maThuoc"));
-                t.setThanhPhan(rs.getString("thanhPhan"));
+                t.setTenThuoc(rs.getString("ten_thuoc"));
+                t.setMaThuoc(rs.getString("ma_thuoc"));
+                t.setThanhPhan(rs.getString("thanh_phan"));
 
                 cthd.setThuoc(t);
 
@@ -112,21 +123,21 @@ public class DAO_CT_HoaDonBan {
     public ArrayList<CT_HoaDonBan> getDSCT_HdByMaHD(String maHD) {
         ArrayList<CT_HoaDonBan> list = new ArrayList<>();
         PreparedStatement s = null;
-        String sql = "select * from CT_HoaDonBan where maHoaDonBan = '" + maHD + "'";
+        String sql = "select * from CT_HoaDonBan where ma_hoa_don_ban = '" + maHD + "'";
         try {
             s = con.prepareStatement(sql);
             ResultSet r = s.executeQuery();
             // v.addElement("");
             while (r.next()) {
                 int sl = r.getInt(1);
-                String maThuoc = r.getString(2);
-                double gia = r.getDouble(4);
-                float vat = r.getFloat(5);
+                String ma_thuoc = r.getString(3);
+                double gia = r.getDouble(2);
+                float thue_vat = r.getFloat(5);
 
                 DAO_Thuoc dao = new DAO_Thuoc();
-                Thuoc t = dao.getThuocTheoMa(maThuoc);
+                Thuoc t = dao.getThuocTheoMa(ma_thuoc);
 
-                CT_HoaDonBan ctHD = new CT_HoaDonBan(sl, gia, t, vat);
+                CT_HoaDonBan ctHD = new CT_HoaDonBan(sl, gia, t, thue_vat);
                 list.add(ctHD);
             }
         } catch (SQLException e) {

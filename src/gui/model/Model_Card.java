@@ -5,7 +5,7 @@ import javax.swing.Icon;
 
 /**
  *
- * @author THANHTU
+ * 
  */
 public class Model_Card {
     Icon icon;
